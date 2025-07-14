@@ -1,19 +1,27 @@
-// server.js
 import express from 'express';
 import bodyParser from 'body-parser';
+import axios from 'axios';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/webhook', (req, res) => {
-  const mensaje = req.body.Body;
-  const de = req.body.From;
+app.post('/webhook', async (req, res) => {
+ console.log(req.body)
+  
 
-  console.log(`Mensaje recibido de ${de}: ${mensaje}`);
+   try {
+      if(req.body.Latitude && req.body.Longitude) {
+        console.log('Latitud:', req.body.Latitude);
+        console.log('Longitud:', req.body.Longitude);
+        const googleMapsUrl = `https://www.google.com/maps?q=${req.body.Latitude},${req.body.Longitude}`;
+        console.log('Abrir mapa en:', googleMapsUrl);
+      }
+      console.log(req.body.Body)
+      
 
-  res.send('<Response></Response>'); // responde vacío
+    } catch (error) {
+      console.error('Error al obtener ubicación:', error);
+    }  
 });
 
-app.listen(3000, () => {
-  console.log('Servidor escuchando en http://localhost:3000');
-});
+app.listen(3000, () => console.log('Servidor escuchando en http://localhost:3000'));

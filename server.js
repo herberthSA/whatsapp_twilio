@@ -2,22 +2,26 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 const app = express();
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/webhook', async (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
   try {
-    if (req.body.Latitude && req.body.Longitude) {
-      console.log('Latitud:', req.body.Latitude);
-      console.log('Longitud:', req.body.Longitude);
-      const googleMapsUrl = `https://www.google.com/maps?q=${req.body.Latitude},${req.body.Longitude}`;
-      console.log('Abrir mapa en:', googleMapsUrl);
+    if (req.body.latitud && req.body.longitud) {
+      
+      console.log(req.body);
+      // Aquí puedes procesar la ubicación recibida
+      const googleMapsUrl = `https://www.google.com/maps?q=${req.body.latitud},${req.body.longitud}`;
+      console.log('Ubicación:', googleMapsUrl);
+      return res.sendStatus(200);
+      
     }
-    console.log(req.body.Body)
-
+    
 
   } catch (error) {
     console.error('Error al obtener ubicación:', error);
+    return res.status(500).send('Error interno del servidor');
   }
 });
 

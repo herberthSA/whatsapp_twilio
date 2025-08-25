@@ -1,8 +1,13 @@
 import express from 'express';
+import apiRoutes from './routes/apiRoutes.js';
+import logger from './utils/logger.js'; 
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.post('/api', async (req, res) => {
+
+app.use('/api', apiRoutes);
+app.post('/v1', async (req, res) => {
   console.log(req.body)
   try {
     if (req.body.latitud && req.body.longitud) {
@@ -22,4 +27,7 @@ app.post('/api', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log('Servidor escuchando en http://localhost:3000'));
+app.listen(3000, () => {
+  logger.info('Servidor escuchando en http://localhost:3000');
+
+});

@@ -10,7 +10,7 @@ export const postDatos = async (req, res) => {
     logger.info(`Body recibido: ${JSON.stringify(body)}`);
 
     // POST a la API externa con token
-    const response = await api.post("https://api.example.com/protegido", body);
+    const response = await api.post("http://129.146.39.118:443/iclock/api/wa_transactions/", body);
 
     logger.info(`Datos recibidos de la API: ${JSON.stringify(response.data)}`);
 

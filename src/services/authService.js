@@ -1,17 +1,18 @@
 import axios from "axios";
 import logger from "../utils/logger.js";
-
 let accessToken = null;
 
 const getNewToken = async () => {
   try {
     logger.info("Solicitando nuevo token...");
-    const { data } = await axios.post("https://auth.example.com/api/token", {
-      username: "TU_USUARIO",
-      password: "TU_PASSWORD",
-    });
+    const  data = await axios.post("http://129.146.39.118:443/api-token-auth/", {
+      username: process.env.USER,
+      password: process.env.PASSWORD,
+    },{ headers: { "Content-Type": "application/json"}});
 
-    accessToken = data.token;
+    
+    accessToken = data.data.token;
+    
     logger.info(`Nuevo token generado: ${accessToken}`);
     return accessToken;
   } catch (error) {
